@@ -78,15 +78,19 @@ public class VehicleRestController {
         List<VehicleDTO> vehicleDTOs = new ArrayList<>();
         for (Vehicle vehicle : vehicles) {
             VehicleDTO vehicleDTO = vehicleDTOConverter(vehicle);
+            vehicleDTOs.add(vehicleDTO);
         }
         return vehicleDTOs;
     }
 
     @GetMapping("/vehicles_by_brand")
-    public ResponseEntity<List<VehicleDTO>> getAllVehiclesByBrand() {
+    public ResponseEntity<List<VehicleDTO>> getAllVehiclesByBrand(@RequestParam String brand) {
         List<Vehicle> vehicles = vehicleRepository.findAll();
         List<VehicleDTO> vehicleDTOs = new ArrayList<>();
 
+        for (Vehicle vehicle : vehicles) {
+            vehicleDTOs.add(vehicleDTOConverter(vehicle));
+        }
         return ResponseEntity.ok(vehicleDTOs);
     }
 
