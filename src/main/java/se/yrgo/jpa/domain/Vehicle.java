@@ -14,7 +14,7 @@ public class Vehicle {
     private int productionYear;
 
     @ManyToOne
-    @JoinColumn(name= "customer_id")
+    @JoinColumn(name= "customer-id")
     private Customer customer;
 
     public Vehicle() {}

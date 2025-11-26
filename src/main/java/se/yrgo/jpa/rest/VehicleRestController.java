@@ -90,6 +90,16 @@ public class VehicleRestController {
         return ResponseEntity.ok(vehicleDTOs);
     }
 
+    @GetMapping("/customer-id")
+    public ResponseEntity<Long> getCustomerIdByName(@RequestParam String name) {
+        Customer customer = customerRepository.findByName(name);
+                if ( customer != null ) {
+                    return ResponseEntity.ok(customer.getId());
+                } else {
+                return ResponseEntity.notFound().build();
+                }
+    }
+
     //Utility method
     private VehicleDTO vehicleDTOConverter(Vehicle vehicle) {
         VehicleDTO vehicleDTO = new VehicleDTO();
