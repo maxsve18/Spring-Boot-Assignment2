@@ -1,5 +1,8 @@
 package se.yrgo.jpa.rest;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,9 @@ public class VehicleRestController {
 
     @Autowired
     private VehicleRepository vehicleRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @PostMapping("/customers")
     public ResponseEntity<String> createCustomer(@RequestParam String name, @RequestParam String phone) {
@@ -102,6 +108,16 @@ public class VehicleRestController {
                 } else {
                 return ResponseEntity.notFound().build();
                 }
+    }
+
+    @DeleteMapping("/clear-database")
+    @Transactional
+    public ResponseEntity<String> clearDatabase() {
+        vehicleRepository.deleteAll();
+        customerRepository.deleteAll();
+        entityManager.createNativeQuery("ALTER TABLE customer ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        entityManager.createNativeQuery("ALTER TABLE vehicle ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        return ResponseEntity.ok("Database has been cleared successfully and IDs reset to 1.");
     }
 
     //Utility method

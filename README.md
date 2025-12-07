@@ -32,3 +32,13 @@
 ### 7. Get Vehicles By Brand
 - **URL**: /vehicles_by_brand?brand=Volkswagen
 - **Method**:'GET'
+
+### Attention!:
+If you want to do the endpoints all over again,  
+or any error would occur use this:
+
+- **URL**: /clear-database
+- **Method**:'DELETE'
+
+*It clears the database and resets the ID to 1.*   
+*Then start from the top of the document again.*
